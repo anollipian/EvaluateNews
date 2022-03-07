@@ -2,15 +2,19 @@ const path = require("path")
 const webpack = require("webpack")
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
-    mode:'production',
+    mode: 'production',
     devtool: 'source-map',
     entry: './src/client/index.js',
     output: {
         libraryTarget: 'var',
         library: 'Client'
-    },   
+    },
     module: {
         rules: [
             {
@@ -18,11 +22,23 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: "babel-loader"
             },
+            // {
+            //     test: /\.scss$/,
+            //     use: ['style-loader', 'css-loader', 'sass-loader']
+            // },
             {
-                test: /\.scss$/,
-                use: [ 'style-loader', 'css-loader', 'sass-loader' ]
-            }
+                test: /.scss$/,
+                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+            },
         ]
+    },
+    optimization: {
+        //minimize: true,
+        minimizer: [
+            // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`)
+            new TerserPlugin({}),
+            new CssMinimizerPlugin(),
+        ],
     },
     plugins: [
         new HtmlWebPackPlugin({
@@ -37,6 +53,10 @@ module.exports = {
             // Automatically remove all unused webpack assets on rebuild
             cleanStaleWebpackAssets: true,
             protectWebpackAssets: false
-        })
+        }),
+        new MiniCssExtractPlugin({ 
+            filename: '[name].css'
+        }),
+        new WorkboxPlugin.GenerateSW()
     ]
 }
