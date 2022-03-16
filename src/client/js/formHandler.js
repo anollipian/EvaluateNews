@@ -7,7 +7,7 @@ function handleSubmit(event) {
 
     console.log("::: Form Submitted :::")
 
-    fetch('http://localhost:3000/test')
+    fetch('http://localhost:9000/test')
     .then(res => res.json())
     .then(function(res) {
         document.getElementById('results').innerHTML = res.message
