@@ -1,17 +1,32 @@
 function handleSubmit(event) {
     event.preventDefault()
+    let formText = document.getElementById('url').value
+    if (Client.isValidURL(formText)) {
+        fetchData(formText)
+    }
+    else {
+        Client.handleError();
+    }
+}
 
-    // check what text was put into the form field
-    let formText = document.getElementById('name').value
-    Client.checkForName(formText)
-
-    console.log("::: Form Submitted :::")
-
-    fetch('http://localhost:9000/test')
-    .then(res => res.json())
-    .then(function(res) {
-        document.getElementById('results').innerHTML = res.message
-    })
+async function fetchData(formText) {
+    const result = await fetch('http://localhost:9000/checkUrl', {
+        method: 'POST',
+        body: JSON.stringify({
+            value: formText
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    try {
+        const newData = await result.json();
+        console.log(newData);
+        Client.fillData(newData)
+    }
+    catch (error) {
+        console.log("error", error);
+    }
 }
 
 export { handleSubmit }

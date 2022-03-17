@@ -16,7 +16,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.1",
-    "node-fetch": "^3.2.3",
+    "node-fetch": "^2.6.7",
     "python": "^0.0.4",
     "sass": "^1.49.9",
     "webpack": "^5.69.1"
