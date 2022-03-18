@@ -2,12 +2,9 @@
 import { handleSubmit } from "../src/client/js/formHandler"
 // In each test file, the general flow of the test block should be:
 
-//     Import the js file to test
 //     Define the input for the function. Note that, to keep it simple, we will not validate the input being provided to the test cases.
 //     Define the expected output
 //     Check if the function produces the expected output
-
-
 // The describe() function takes two arguments - a string description, and a test suite as a callback function.  
 // A test suite may contain one or more related tests    
 describe("Testing the submit functionality", () => {
