@@ -21,8 +21,14 @@ async function fetchData(formText) {
     });
     try {
         const newData = await result.json();
-        console.log(newData);
+        if(newData.status.msg!="OK")
+        {
+            Client.handleError();
+        }
+        else
+        {
         Client.fillData(newData)
+        }
     }
     catch (error) {
         console.log("error", error);
